@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipe Measurement Calculator</title>
+    <script>
+        function calculate() {
+            let a = parseFloat(document.getElementById('a').value);
+            let b = parseFloat(document.getElementById('b').value);
+            let c = parseFloat(document.getElementById('c').value);
+            let angle = parseFloat(document.getElementById('angle').value);
+            
+            let count = [a, b, c, angle].filter(v => !isNaN(v)).length;
+            if (count < 2) {
+                alert("Enter at least two values.");
+                return;
+            }
+
+            if (!isNaN(a) && !isNaN(b)) {
+                c = Math.sqrt(a * a + b * b);
+                angle = Math.atan2(b, a) * (180 / Math.PI);
+            } else if (!isNaN(a) && !isNaN(c)) {
+                b = Math.sqrt(c * c - a * a);
+                angle = Math.atan2(b, a) * (180 / Math.PI);
+            } else if (!isNaN(b) && !isNaN(c)) {
+                a = Math.sqrt(c * c - b * b);
+                angle = Math.atan2(b, a) * (180 / Math.PI);
+            } else if (!isNaN(a) && !isNaN(angle)) {
+                let rad = angle * (Math.PI / 180);
+                b = a * Math.tan(rad);
+                c = Math.sqrt(a * a + b * b);
+            } else {
+                alert("Invalid combination of inputs.");
+                return;
+            }
+
+            document.getElementById('a').value = a.toFixed(2);
+            document.getElementById('b').value = b.toFixed(2);
+            document.getElementById('c').value = c.toFixed(2);
+            document.getElementById('angle').value = angle.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <h2>Pipe Measurement Calculator</h2>
+    <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
+    <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
+    <label>c: <input type="number" id="c" oninput="calculate()"></label><br>
+    <label>Angle (degrees): <input type="number" id="angle" oninput="calculate()"></label><br>
+</body>
+</html>
