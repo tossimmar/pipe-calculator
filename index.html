@@ -9,54 +9,49 @@
             let a = parseFloat(document.getElementById('a').value);
             let b = parseFloat(document.getElementById('b').value);
             let c = parseFloat(document.getElementById('c').value);
-            let angle = parseFloat(document.getElementById('angle').value);
+            let alpha = parseFloat(document.getElementById('alpha').value);
+            let beta = parseFloat(document.getElementById('beta').value);
             
-            let count = [a, b, c, angle].filter(v => !isNaN(v)).length;
+            let count = [a, b, c, alpha, beta].filter(v => !isNaN(v)).length;
 
-            if (count < 2) {
-                return; // Don't calculate unless at least two values are provided
-            }
+            if (count < 2) return; // Require at least two values
 
             if (!isNaN(a) && !isNaN(b)) {
                 c = Math.sqrt(a * a + b * b);
-                angle = Math.atan2(b, a) * (180 / Math.PI);
+                alpha = Math.atan2(b, a) * (180 / Math.PI);
+                beta = 90 - alpha;
             } else if (!isNaN(a) && !isNaN(c)) {
                 b = Math.sqrt(c * c - a * a);
-                angle = Math.atan2(b, a) * (180 / Math.PI);
+                alpha = Math.asin(b / c) * (180 / Math.PI);
+                beta = 90 - alpha;
             } else if (!isNaN(b) && !isNaN(c)) {
                 a = Math.sqrt(c * c - b * b);
-                angle = Math.atan2(b, a) * (180 / Math.PI);
-            } else if (!isNaN(a) && !isNaN(angle)) {
-                let rad = angle * (Math.PI / 180);
-                b = a * Math.tan(rad);
-                c = Math.sqrt(a * a + b * b);
+                beta = Math.asin(a / c) * (180 / Math.PI);
+                alpha = 90 - beta;
+            } else if (!isNaN(alpha) && !isNaN(beta)) {
+                if (alpha + beta !== 90) return; // Must sum to 90°
+                a = c * Math.cos(alpha * (Math.PI / 180));
+                b = c * Math.sin(alpha * (Math.PI / 180));
             } else {
-                return; // Invalid case, do nothing
+                return; // Invalid case
             }
 
             document.getElementById('a').value = a.toFixed(2);
             document.getElementById('b').value = b.toFixed(2);
             document.getElementById('c').value = c.toFixed(2);
-            document.getElementById('angle').value = angle.toFixed(2);
+            document.getElementById('alpha').value = alpha.toFixed(2);
+            document.getElementById('beta').value = beta.toFixed(2);
         }
 
         function checkInitialPrompt() {
-            let a = document.getElementById('a').value;
-            let b = document.getElementById('b').value;
-            let c = document.getElementById('c').value;
-            let angle = document.getElementById('angle').value;
-            
-            let count = [a, b, c, angle].filter(v => v.trim() !== "").length;
-            if (count < 2) {
+            let inputs = ["a", "b", "c", "alpha", "beta"].map(id => document.getElementById(id).value.trim());
+            if (inputs.filter(v => v !== "").length < 2) {
                 alert("Enter at least two values to perform calculations.");
             }
         }
 
         function clearFields() {
-            document.getElementById('a').value = "";
-            document.getElementById('b').value = "";
-            document.getElementById('c').value = "";
-            document.getElementById('angle').value = "";
+            ["a", "b", "c", "alpha", "beta"].forEach(id => document.getElementById(id).value = "");
             checkInitialPrompt();
         }
 
@@ -88,13 +83,16 @@
         <text x="100" y="195" font-size="14" text-anchor="middle">a</text>
         <text x="185" y="100" font-size="14">b</text>
         <text x="100" y="90" font-size="14" text-anchor="middle">c</text>
-        <text x="165" y="175" font-size="14" text-anchor="middle">θ</text>
+        <text x="165" y="175" font-size="14" text-anchor="middle">α</text>
+        <text x="30" y="160" font-size="14" text-anchor="middle">β</text>
+        <text x="180" y="190" font-size="14" text-anchor="middle">90°</text>
     </svg>
     <br>
     <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
     <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
     <label>c: <input type="number" id="c" oninput="calculate()"></label><br>
-    <label>Angle (degrees): <input type="number" id="angle" oninput="calculate()"></label><br>
+    <label>α (degrees): <input type="number" id="alpha" oninput="calculate()"></label><br>
+    <label>β (degrees): <input type="number" id="beta" oninput="calculate()"></label><br>
     <button onclick="clearFields()">Clear</button>
 </body>
 </html>
