@@ -20,12 +20,12 @@
                 alpha = Math.atan2(b, a) * (180 / Math.PI);
                 beta = 90 - alpha;
             } else if (!isNaN(a) && !isNaN(c)) {
-                if (a >= c) return; // Invalid case
+                if (a >= c) return;
                 b = Math.sqrt(c * c - a * a);
                 alpha = Math.acos(a / c) * (180 / Math.PI);
                 beta = 90 - alpha;
             } else if (!isNaN(b) && !isNaN(c)) {
-                if (b >= c) return; // Invalid case
+                if (b >= c) return;
                 a = Math.sqrt(c * c - b * b);
                 beta = Math.asin(b / c) * (180 / Math.PI);
                 alpha = 90 - beta;
@@ -37,8 +37,22 @@
                 b = c * Math.sin(beta * (Math.PI / 180));
                 a = c * Math.cos(beta * (Math.PI / 180));
                 alpha = 90 - beta;
-            } else {
-                return; // Invalid case
+            } else if (!isNaN(alpha) && !isNaN(a)) {
+                beta = 90 - alpha;
+                b = a * Math.tan(alpha * (Math.PI / 180));
+                c = a / Math.cos(alpha * (Math.PI / 180));
+            } else if (!isNaN(alpha) && !isNaN(b)) {
+                beta = 90 - alpha;
+                a = b / Math.tan(alpha * (Math.PI / 180));
+                c = b / Math.sin(alpha * (Math.PI / 180));
+            } else if (!isNaN(beta) && !isNaN(a)) {
+                alpha = 90 - beta;
+                b = a * Math.tan(alpha * (Math.PI / 180));
+                c = a / Math.cos(alpha * (Math.PI / 180));
+            } else if (!isNaN(beta) && !isNaN(b)) {
+                alpha = 90 - beta;
+                a = b / Math.tan(alpha * (Math.PI / 180));
+                c = b / Math.sin(alpha * (Math.PI / 180));
             }
 
             document.getElementById('a').value = a.toFixed(2);
@@ -80,17 +94,17 @@
 </head>
 <body>
     <h2>Pipe Measurement Calculator</h2>
-    <!-- Labeled Right Triangle SVG with Improved Angle Positions -->
+    <!-- Labeled Right Triangle SVG with Proper Angle Placement -->
     <svg viewBox="0 0 200 200">
         <!-- Triangle -->
         <polygon points="20,180 180,180 180,20" fill="none" stroke="black" stroke-width="2"/>
         <!-- Side Labels -->
         <text x="100" y="195" font-size="14" text-anchor="middle">a</text> <!-- Base -->
         <text x="185" y="100" font-size="14">b</text> <!-- Height -->
-        <text x="110" y="100" font-size="14" text-anchor="middle">c</text> <!-- Hypotenuse -->
+        <text x="100" y="90" font-size="14" text-anchor="middle">c</text> <!-- Hypotenuse -->
         <!-- Angle Labels -->
-        <text x="30" y="160" font-size="14" font-weight="bold" fill="red">α</text> <!-- Alpha inside bottom-left corner -->
-        <text x="160" y="40" font-size="14" font-weight="bold" fill="red">β</text> <!-- Beta inside top-right corner -->
+        <text x="35" y="165" font-size="14" font-weight="bold" fill="red">α</text> <!-- Alpha (bottom-left) -->
+        <text x="160" y="35" font-size="14" font-weight="bold" fill="red">β</text> <!-- Beta (top-right) -->
     </svg>
     <br>
     <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
