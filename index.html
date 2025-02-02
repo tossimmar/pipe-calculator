@@ -11,9 +11,8 @@
             let c = parseFloat(document.getElementById('c').value);
             let alpha = parseFloat(document.getElementById('alpha').value);
             let beta = parseFloat(document.getElementById('beta').value);
-            
-            let count = [a, b, c, alpha, beta].filter(v => !isNaN(v)).length;
 
+            let count = [a, b, c, alpha, beta].filter(v => !isNaN(v)).length;
             if (count < 2) return; // Require at least two values
 
             if (!isNaN(a) && !isNaN(b)) {
@@ -21,17 +20,25 @@
                 alpha = Math.atan2(b, a) * (180 / Math.PI);
                 beta = 90 - alpha;
             } else if (!isNaN(a) && !isNaN(c)) {
+                if (a >= c) return; // Invalid case
                 b = Math.sqrt(c * c - a * a);
-                alpha = Math.asin(b / c) * (180 / Math.PI);
+                alpha = Math.acos(a / c) * (180 / Math.PI);
                 beta = 90 - alpha;
             } else if (!isNaN(b) && !isNaN(c)) {
+                if (b >= c) return; // Invalid case
                 a = Math.sqrt(c * c - b * b);
-                beta = Math.asin(a / c) * (180 / Math.PI);
+                beta = Math.asin(b / c) * (180 / Math.PI);
                 alpha = 90 - beta;
             } else if (!isNaN(alpha) && !isNaN(beta)) {
-                if (alpha + beta !== 90) return; // Must sum to 90°
+                if (Math.abs(alpha + beta - 90) > 0.01) return; // Must sum to 90°
+            } else if (!isNaN(alpha) && !isNaN(c)) {
                 a = c * Math.cos(alpha * (Math.PI / 180));
                 b = c * Math.sin(alpha * (Math.PI / 180));
+                beta = 90 - alpha;
+            } else if (!isNaN(beta) && !isNaN(c)) {
+                b = c * Math.sin(beta * (Math.PI / 180));
+                a = c * Math.cos(beta * (Math.PI / 180));
+                alpha = 90 - beta;
             } else {
                 return; // Invalid case
             }
@@ -80,12 +87,11 @@
         <!-- Triangle -->
         <polygon points="20,180 180,180 180,20" fill="none" stroke="black" stroke-width="2"/>
         <!-- Labels -->
-        <text x="100" y="195" font-size="14" text-anchor="middle">a</text>
-        <text x="185" y="100" font-size="14">b</text>
-        <text x="100" y="90" font-size="14" text-anchor="middle">c</text>
-        <text x="165" y="175" font-size="14" text-anchor="middle">α</text>
-        <text x="30" y="160" font-size="14" text-anchor="middle">β</text>
-        <text x="180" y="190" font-size="14" text-anchor="middle">90°</text>
+        <text x="100" y="195" font-size="14" text-anchor="middle">a</text> <!-- Base -->
+        <text x="185" y="100" font-size="14">b</text> <!-- Height -->
+        <text x="100" y="90" font-size="14" text-anchor="middle">c</text> <!-- Hypotenuse -->
+        <text x="30" y="170" font-size="14" text-anchor="middle">α</text> <!-- Alpha at bottom-left -->
+        <text x="160" y="40" font-size="14" text-anchor="middle">β</text> <!-- Beta at top-right -->
     </svg>
     <br>
     <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
