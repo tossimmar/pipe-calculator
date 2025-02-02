@@ -13,7 +13,10 @@
             let beta = parseFloat(document.getElementById('beta').value);
 
             let count = [a, b, c, alpha, beta].filter(v => !isNaN(v)).length;
-            if (count < 2) return; // Require at least two values
+            if (count < 2) {
+                alert("Enter at least two values to perform calculations.");
+                return;
+            }
 
             if (!isNaN(a) && !isNaN(b)) {
                 c = Math.sqrt(a * a + b * b);
@@ -62,19 +65,9 @@
             document.getElementById('beta').value = beta.toFixed(2);
         }
 
-        function checkInitialPrompt() {
-            let inputs = ["a", "b", "c", "alpha", "beta"].map(id => document.getElementById(id).value.trim());
-            if (inputs.filter(v => v !== "").length < 2) {
-                alert("Enter at least two values to perform calculations.");
-            }
-        }
-
         function clearFields() {
             ["a", "b", "c", "alpha", "beta"].forEach(id => document.getElementById(id).value = "");
-            checkInitialPrompt();
         }
-
-        window.onload = checkInitialPrompt;
     </script>
     <style>
         body {
@@ -89,6 +82,12 @@
         input {
             width: 100px;
             margin: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -107,11 +106,12 @@
         <text x="160" y="35" font-size="14" font-weight="bold" fill="red">β</text> <!-- Beta (top-right) -->
     </svg>
     <br>
-    <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
-    <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
-    <label>c: <input type="number" id="c" oninput="calculate()"></label><br>
-    <label>α (degrees): <input type="number" id="alpha" oninput="calculate()"></label><br>
-    <label>β (degrees): <input type="number" id="beta" oninput="calculate()"></label><br>
+    <label>a: <input type="number" id="a"></label><br>
+    <label>b: <input type="number" id="b"></label><br>
+    <label>c: <input type="number" id="c"></label><br>
+    <label>α (degrees): <input type="number" id="alpha"></label><br>
+    <label>β (degrees): <input type="number" id="beta"></label><br>
+    <button onclick="calculate()">Calculate</button>
     <button onclick="clearFields()">Clear</button>
 </body>
 </html>
