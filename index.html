@@ -12,9 +12,9 @@
             let angle = parseFloat(document.getElementById('angle').value);
             
             let count = [a, b, c, angle].filter(v => !isNaN(v)).length;
+
             if (count < 2) {
-                alert("Enter at least two values.");
-                return;
+                return; // Don't calculate unless at least two values are provided
             }
 
             if (!isNaN(a) && !isNaN(b)) {
@@ -31,8 +31,7 @@
                 b = a * Math.tan(rad);
                 c = Math.sqrt(a * a + b * b);
             } else {
-                alert("Invalid combination of inputs.");
-                return;
+                return; // Invalid case, do nothing
             }
 
             document.getElementById('a').value = a.toFixed(2);
@@ -40,6 +39,28 @@
             document.getElementById('c').value = c.toFixed(2);
             document.getElementById('angle').value = angle.toFixed(2);
         }
+
+        function checkInitialPrompt() {
+            let a = document.getElementById('a').value;
+            let b = document.getElementById('b').value;
+            let c = document.getElementById('c').value;
+            let angle = document.getElementById('angle').value;
+            
+            let count = [a, b, c, angle].filter(v => v.trim() !== "").length;
+            if (count < 2) {
+                alert("Enter at least two values to perform calculations.");
+            }
+        }
+
+        function clearFields() {
+            document.getElementById('a').value = "";
+            document.getElementById('b').value = "";
+            document.getElementById('c').value = "";
+            document.getElementById('angle').value = "";
+            checkInitialPrompt();
+        }
+
+        window.onload = checkInitialPrompt;
     </script>
 </head>
 <body>
@@ -48,5 +69,6 @@
     <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
     <label>c: <input type="number" id="c" oninput="calculate()"></label><br>
     <label>Angle (degrees): <input type="number" id="angle" oninput="calculate()"></label><br>
+    <button onclick="clearFields()">Clear</button>
 </body>
 </html>
