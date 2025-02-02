@@ -68,7 +68,7 @@
             text-align: center;
             margin-top: 20px;
         }
-        img {
+        svg {
             width: 300px;
             margin-bottom: 20px;
         }
@@ -80,7 +80,16 @@
 </head>
 <body>
     <h2>Pipe Measurement Calculator</h2>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RightTriangle.svg/300px-RightTriangle.svg.png" alt="Right Triangle Diagram">
+    <!-- Labeled Right Triangle SVG -->
+    <svg viewBox="0 0 200 200">
+        <!-- Triangle -->
+        <polygon points="20,180 180,180 180,20" fill="none" stroke="black" stroke-width="2"/>
+        <!-- Labels -->
+        <text x="100" y="195" font-size="14" text-anchor="middle">a</text>
+        <text x="185" y="100" font-size="14">b</text>
+        <text x="100" y="90" font-size="14" text-anchor="middle">c</text>
+        <text x="165" y="175" font-size="14" text-anchor="middle">θ</text>
+    </svg>
     <br>
     <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
     <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
