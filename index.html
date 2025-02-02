@@ -62,9 +62,26 @@
 
         window.onload = checkInitialPrompt;
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        img {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100px;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
     <h2>Pipe Measurement Calculator</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RightTriangle.svg/300px-RightTriangle.svg.png" alt="Right Triangle Diagram">
+    <br>
     <label>a: <input type="number" id="a" oninput="calculate()"></label><br>
     <label>b: <input type="number" id="b" oninput="calculate()"></label><br>
     <label>c: <input type="number" id="c" oninput="calculate()"></label><br>
