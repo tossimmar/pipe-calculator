@@ -3,89 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipe Measuring Tool</title>
+    <title>Right Triangle Solver</title>
     <style>
-        input { margin: 5px; }
-        button { margin-top: 10px; display: block; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2f4f4f;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1e3a3a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        input {
+            margin: 5px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            width: 80px;
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px;
+            background-color: #008080;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #20b2aa;
+        }
     </style>
 </head>
 <body>
-    <h2>Pipe Measuring Tool</h2>
-    
-    <svg width="200" height="200">
-        <!-- Triangle -->
-        <polygon points="20,180 180,180 180,20" stroke="black" fill="none" stroke-width="2" />
-        
-        <!-- Labels -->
-        <text x="100" y="195" font-size="14">a</text>
-        <text x="185" y="100" font-size="14">b</text>
-        <text x="90" y="100" font-size="14">c</text>
-        <text x="35" y="175" font-size="14">α</text>
-        <text x="168" y="45" font-size="14">β</text>
-    </svg>
-    
-    <label>a: <input type="number" id="a" step="any"></label>
-    <label>b: <input type="number" id="b" step="any"></label>
-    <label>c: <input type="number" id="c" step="any"></label>
-    <label>Alpha: <input type="number" id="alpha" step="any"></label>
-    <label>Beta: <input type="number" id="beta" step="any"></label>
-    
-    <button onclick="calculate()">Calculate</button>
-    <button onclick="clearFields()">Clear</button>
+    <div class="container">
+        <img src="right_triangle_generated.png" alt="Labeled Right Triangle">
+        <div>
+            <input type="number" id="A" placeholder="A">
+            <input type="number" id="B" placeholder="B">
+            <input type="number" id="C" placeholder="C">
+            <input type="number" id="alpha" placeholder="α">
+            <input type="number" id="beta" placeholder="β">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="clearFields()">Clear</button>
+    </div>
     
     <script>
-        function roundToSixteenths(value) {
-            let whole = Math.floor(value);
-            let fractional = value - whole;
-            let sixteenths = Math.round(fractional * 16);
-            if (sixteenths === 16) { whole += 1; sixteenths = 0; }
-            return sixteenths === 0 ? `${whole}` : `${whole} ${sixteenths}/16`;
+        function toInches(value) {
+            let inches = Math.floor(value);
+            let fraction = value - inches;
+            let sixteenths = Math.round(fraction * 16);
+            if (sixteenths === 16) {
+                inches += 1;
+                sixteenths = 0;
+            }
+            return sixteenths === 0 ? `${inches}"` : `${inches} ${sixteenths}/16"`;
         }
-
+        
         function calculate() {
-            let a = parseFloat(document.getElementById("a").value) || null;
-            let b = parseFloat(document.getElementById("b").value) || null;
-            let c = parseFloat(document.getElementById("c").value) || null;
-            let alpha = parseFloat(document.getElementById("alpha").value) || null;
-            let beta = parseFloat(document.getElementById("beta").value) || null;
+            let A = parseFloat(document.getElementById('A').value);
+            let B = parseFloat(document.getElementById('B').value);
+            let C = parseFloat(document.getElementById('C').value);
+            let alpha = parseFloat(document.getElementById('alpha').value);
+            let beta = parseFloat(document.getElementById('beta').value);
             
-            if ([a, b, c, alpha, beta].filter(v => v !== null).length < 2) {
+            let inputs = [A, B, C, alpha, beta].filter(v => !isNaN(v));
+            if (inputs.length < 2) {
                 alert("Please enter at least two values.");
                 return;
             }
             
-            const toRadians = angle => angle * (Math.PI / 180);
-            const toDegrees = angle => angle * (180 / Math.PI);
-            
-            if (alpha !== null && beta === null) beta = 90 - alpha;
-            if (beta !== null && alpha === null) alpha = 90 - beta;
-            
-            if (a !== null && beta !== null) {
-                b = a * Math.tan(toRadians(beta));
-                c = a / Math.cos(toRadians(beta));
+            if (!isNaN(alpha) && !isNaN(beta)) {
+                alpha = 90 - beta;
+                beta = 90 - alpha;
+            } else if (!isNaN(A) && !isNaN(B)) {
+                C = Math.sqrt(A * A + B * B);
+                alpha = Math.atan(B / A) * (180 / Math.PI);
+                beta = 90 - alpha;
+            } else if (!isNaN(A) && !isNaN(C)) {
+                B = Math.sqrt(C * C - A * A);
+                alpha = Math.asin(A / C) * (180 / Math.PI);
+                beta = 90 - alpha;
+            } else if (!isNaN(B) && !isNaN(C)) {
+                A = Math.sqrt(C * C - B * B);
+                beta = Math.asin(B / C) * (180 / Math.PI);
+                alpha = 90 - beta;
+            } else if (!isNaN(A) && !isNaN(alpha)) {
+                B = A * Math.tan(alpha * Math.PI / 180);
+                C = A / Math.cos(alpha * Math.PI / 180);
+                beta = 90 - alpha;
+            } else if (!isNaN(A) && !isNaN(beta)) {
+                B = A / Math.tan(beta * Math.PI / 180);
+                C = A / Math.sin(beta * Math.PI / 180);
+                alpha = 90 - beta;
+            } else if (!isNaN(B) && !isNaN(alpha)) {
+                A = B / Math.tan(alpha * Math.PI / 180);
+                C = B / Math.sin(alpha * Math.PI / 180);
+                beta = 90 - alpha;
+            } else if (!isNaN(B) && !isNaN(beta)) {
+                A = B * Math.tan(beta * Math.PI / 180);
+                C = B / Math.cos(beta * Math.PI / 180);
+                alpha = 90 - beta;
+            } else if (!isNaN(C) && !isNaN(alpha)) {
+                A = C * Math.cos(alpha * Math.PI / 180);
+                B = C * Math.sin(alpha * Math.PI / 180);
+                beta = 90 - alpha;
+            } else if (!isNaN(C) && !isNaN(beta)) {
+                A = C * Math.sin(beta * Math.PI / 180);
+                B = C * Math.cos(beta * Math.PI / 180);
+                alpha = 90 - beta;
             }
-            if (b !== null && alpha !== null) {
-                a = b * Math.tan(toRadians(alpha));
-                c = b / Math.sin(toRadians(alpha));
-            }
-            if (c !== null && alpha !== null) {
-                a = c * Math.cos(toRadians(alpha));
-                b = c * Math.sin(toRadians(alpha));
-            }
             
-            if (a !== null) document.getElementById("a").value = roundToSixteenths(a);
-            if (b !== null) document.getElementById("b").value = roundToSixteenths(b);
-            if (c !== null) document.getElementById("c").value = roundToSixteenths(c);
-            if (alpha !== null) document.getElementById("alpha").value = alpha.toFixed(2);
-            if (beta !== null) document.getElementById("beta").value = beta.toFixed(2);
+            document.getElementById('A').value = toInches(A);
+            document.getElementById('B').value = toInches(B);
+            document.getElementById('C').value = toInches(C);
+            document.getElementById('alpha').value = alpha.toFixed(2);
+            document.getElementById('beta').value = beta.toFixed(2);
         }
         
         function clearFields() {
-            document.getElementById("a").value = "";
-            document.getElementById("b").value = "";
-            document.getElementById("c").value = "";
-            document.getElementById("alpha").value = "";
-            document.getElementById("beta").value = "";
+            document.getElementById('A').value = '';
+            document.getElementById('B').value = '';
+            document.getElementById('C').value = '';
+            document.getElementById('alpha').value = '';
+            document.getElementById('beta').value = '';
         }
     </script>
 </body>
