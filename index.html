@@ -77,6 +77,7 @@
             <label>β <input type="number" id="Beta" step="any"></label>
         </div>
         <button onclick="calculate()">Calculate</button>
+        <button onclick="clearFields()">Clear</button>
         <div class="result" id="result"></div>
     </div>
 
@@ -161,8 +162,12 @@
                 }
             }
             
-            let resultText = `A = ${toMixedFraction(A)}\tB = ${toMixedFraction(B)}\tC = ${toMixedFraction(C)}\tα = ${Alpha.toFixed(2)}°\tβ = ${Beta.toFixed(2)}°`;
+            let resultText = `A = ${toMixedFraction(A)}, B = ${toMixedFraction(B)}, C = ${toMixedFraction(C)}, α = ${Alpha.toFixed(2)}°, β = ${Beta.toFixed(2)}°`;
             document.getElementById("result").innerText = resultText;
+        }
+
+        function clearFields() {
+            document.querySelectorAll("input").forEach(input => input.value = "");
         }
     </script>
 </body>
