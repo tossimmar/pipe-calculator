@@ -3,145 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Right Triangle Solver</title>
+    <title>Right Triangle Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2f4f4f;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            text-align: center;
+            background-color: #f4f4f4;
         }
         .container {
-            background: #1e3a3a;
+            max-width: 400px;
+            margin: 20px auto;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         img {
-            width: 200px;
-            margin-bottom: 20px;
+            width: 100%;
+            height: auto;
         }
-        input {
-            margin: 5px;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            width: 80px;
-            text-align: center;
+        .options label {
+            display: block;
+            margin: 5px 0;
         }
-        button {
-            margin: 10px;
-            padding: 10px;
-            background-color: #008080;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #20b2aa;
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="right_triangle_generated.png" alt="Labeled Right Triangle">
-        <div>
-            <input type="number" id="A" placeholder="A">
-            <input type="number" id="B" placeholder="B">
-            <input type="number" id="C" placeholder="C">
-            <input type="number" id="alpha" placeholder="α">
-            <input type="number" id="beta" placeholder="β">
+        <h1>Right Triangle Calculator</h1>
+        <img src="right-triangle.PNG" alt="Right Triangle">
+        <div class="options">
+            <p>Select exactly two values:</p>
+            <label><input type="checkbox" name="option" value="A"> A</label>
+            <label><input type="checkbox" name="option" value="B"> B</label>
+            <label><input type="checkbox" name="option" value="C"> C</label>
+            <label><input type="checkbox" name="option" value="Alpha"> Alpha</label>
+            <label><input type="checkbox" name="option" value="Beta"> Beta</label>
         </div>
         <button onclick="calculate()">Calculate</button>
-        <button onclick="clearFields()">Clear</button>
+        <div class="result" id="result"></div>
     </div>
-    
+
     <script>
-        function toInches(value) {
-            let inches = Math.floor(value);
-            let fraction = value - inches;
-            let sixteenths = Math.round(fraction * 16);
-            if (sixteenths === 16) {
-                inches += 1;
-                sixteenths = 0;
-            }
-            return sixteenths === 0 ? `${inches}"` : `${inches} ${sixteenths}/16"`;
-        }
-        
         function calculate() {
-            let A = parseFloat(document.getElementById('A').value);
-            let B = parseFloat(document.getElementById('B').value);
-            let C = parseFloat(document.getElementById('C').value);
-            let alpha = parseFloat(document.getElementById('alpha').value);
-            let beta = parseFloat(document.getElementById('beta').value);
-            
-            let inputs = [A, B, C, alpha, beta].filter(v => !isNaN(v));
-            if (inputs.length < 2) {
-                alert("Please enter at least two values.");
+            let selected = Array.from(document.querySelectorAll('input[name="option"]:checked'));
+            if (selected.length !== 2) {
+                document.getElementById("result").innerText = "Please select exactly two values.";
                 return;
             }
             
-            if (!isNaN(alpha) && !isNaN(beta)) {
-                alpha = 90 - beta;
-                beta = 90 - alpha;
-            } else if (!isNaN(A) && !isNaN(B)) {
-                C = Math.sqrt(A * A + B * B);
-                alpha = Math.atan(B / A) * (180 / Math.PI);
-                beta = 90 - alpha;
-            } else if (!isNaN(A) && !isNaN(C)) {
-                B = Math.sqrt(C * C - A * A);
-                alpha = Math.asin(A / C) * (180 / Math.PI);
-                beta = 90 - alpha;
-            } else if (!isNaN(B) && !isNaN(C)) {
-                A = Math.sqrt(C * C - B * B);
-                beta = Math.asin(B / C) * (180 / Math.PI);
-                alpha = 90 - beta;
-            } else if (!isNaN(A) && !isNaN(alpha)) {
-                B = A * Math.tan(alpha * Math.PI / 180);
-                C = A / Math.cos(alpha * Math.PI / 180);
-                beta = 90 - alpha;
-            } else if (!isNaN(A) && !isNaN(beta)) {
-                B = A / Math.tan(beta * Math.PI / 180);
-                C = A / Math.sin(beta * Math.PI / 180);
-                alpha = 90 - beta;
-            } else if (!isNaN(B) && !isNaN(alpha)) {
-                A = B / Math.tan(alpha * Math.PI / 180);
-                C = B / Math.sin(alpha * Math.PI / 180);
-                beta = 90 - alpha;
-            } else if (!isNaN(B) && !isNaN(beta)) {
-                A = B * Math.tan(beta * Math.PI / 180);
-                C = B / Math.cos(beta * Math.PI / 180);
-                alpha = 90 - beta;
-            } else if (!isNaN(C) && !isNaN(alpha)) {
-                A = C * Math.cos(alpha * Math.PI / 180);
-                B = C * Math.sin(alpha * Math.PI / 180);
-                beta = 90 - alpha;
-            } else if (!isNaN(C) && !isNaN(beta)) {
-                A = C * Math.sin(beta * Math.PI / 180);
-                B = C * Math.cos(beta * Math.PI / 180);
-                alpha = 90 - beta;
-            }
+            let values = selected.map(el => el.value);
+            document.getElementById("result").innerText = `Selected: ${values.join(' and ')}`;
             
-            document.getElementById('A').value = toInches(A);
-            document.getElementById('B').value = toInches(B);
-            document.getElementById('C').value = toInches(C);
-            document.getElementById('alpha').value = alpha.toFixed(2);
-            document.getElementById('beta').value = beta.toFixed(2);
-        }
-        
-        function clearFields() {
-            document.getElementById('A').value = '';
-            document.getElementById('B').value = '';
-            document.getElementById('C').value = '';
-            document.getElementById('alpha').value = '';
-            document.getElementById('beta').value = '';
+            // Placeholder for actual computation logic
         }
     </script>
 </body>
