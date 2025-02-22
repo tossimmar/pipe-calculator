@@ -41,8 +41,8 @@
             <label>A: <input type="number" id="A" step="any"></label>
             <label>B: <input type="number" id="B" step="any"></label>
             <label>C: <input type="number" id="C" step="any"></label>
-            <label>Alpha: <input type="number" id="Alpha" step="any"></label>
-            <label>Beta: <input type="number" id="Beta" step="any"></label>
+            <label>α: <input type="number" id="Alpha" step="any"></label>
+            <label>β: <input type="number" id="Beta" step="any"></label>
         </div>
         <button onclick="calculate()">Calculate</button>
         <div class="result" id="result"></div>
@@ -117,7 +117,7 @@
                 }
             }
             
-            let resultText = `A: ${toMixedFraction(A)}, B: ${toMixedFraction(B)}, C: ${toMixedFraction(C)}, Alpha: ${Alpha.toFixed(2)}°, Beta: ${Beta.toFixed(2)}°`;
+            let resultText = `A = ${toMixedFraction(A)}\nB = ${toMixedFraction(B)}\nC = ${toMixedFraction(C)}\nα = ${Alpha.toFixed(2)}°\nβ = ${Beta.toFixed(2)}°`;
             document.getElementById("result").innerText = resultText;
         }
     </script>
