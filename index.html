@@ -103,18 +103,18 @@
             
             if (!isNaN(A) && !isNaN(B)) {
                 C = Math.sqrt(A * A + B * B);
-                Alpha = Math.atan(B / A);
-                Beta = Math.atan(A / B);
+                Alpha = (180 * Math.atan(B / A)) / Math.PI;
+                Beta = (180 * Math.atan(A / B)) / Math.PI;
             }
             else if (!isNaN(A) && !isNaN(C)) {
                 B = Math.sqrt(C * C - A * A);
-                Alpha = Math.atan(B / A);
-                Beta = Math.atan(A / B);
+                Alpha = (180 * Math.atan(B / A)) / Math.PI;
+                Beta = (180 * Math.atan(A / B)) / Math.PI;
             }
             else if (!isNaN(B) && !isNaN(C)) {
                 A = Math.sqrt(C * C - B * B);
-                Alpha = Math.atan(B / A);
-                Beta = Math.atan(A / B);
+                Alpha = (180 * Math.atan(B / A)) / Math.PI;
+                Beta = (180 * Math.atan(A / B)) / Math.PI;
             }
             else if (!isNaN(A) && !isNaN(Alpha)) {
                 Beta = 90 - Alpha;
