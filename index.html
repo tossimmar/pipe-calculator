@@ -22,7 +22,7 @@
             width: 100%;
             height: auto;
         }
-        .options label {
+        .inputs label {
             display: block;
             margin: 5px 0;
         }
@@ -36,30 +36,89 @@
     <div class="container">
         <h1>Right Triangle Calculator</h1>
         <img src="./right-triangle.PNG" alt="Right Triangle">
-        <div class="options">
-            <p>Select exactly two values:</p>
-            <label><input type="checkbox" name="option" value="A"> A</label>
-            <label><input type="checkbox" name="option" value="B"> B</label>
-            <label><input type="checkbox" name="option" value="C"> C</label>
-            <label><input type="checkbox" name="option" value="Alpha"> Alpha</label>
-            <label><input type="checkbox" name="option" value="Beta"> Beta</label>
+        <div class="inputs">
+            <p>Enter exactly two values:</p>
+            <label>A: <input type="number" id="A" step="any"></label>
+            <label>B: <input type="number" id="B" step="any"></label>
+            <label>C: <input type="number" id="C" step="any"></label>
+            <label>Alpha: <input type="number" id="Alpha" step="any"></label>
+            <label>Beta: <input type="number" id="Beta" step="any"></label>
         </div>
         <button onclick="calculate()">Calculate</button>
         <div class="result" id="result"></div>
     </div>
 
     <script>
+        function gcd(a, b) {
+            return b ? gcd(b, a % b) : a;
+        }
+
+        function toMixedFraction(decimal) {
+            let whole = Math.floor(decimal);
+            let frac = decimal - whole;
+            let denominator = 16;
+            let numerator = Math.round(frac * denominator);
+            let commonDivisor = gcd(numerator, denominator);
+            numerator /= commonDivisor;
+            denominator /= commonDivisor;
+            return numerator === 0 ? `${whole}` : `${whole} ${numerator}/${denominator}`;
+        }
+
         function calculate() {
-            let selected = Array.from(document.querySelectorAll('input[name="option"]:checked'));
-            if (selected.length !== 2) {
-                document.getElementById("result").innerText = "Please select exactly two values.";
+            let A = parseFloat(document.getElementById("A").value);
+            let B = parseFloat(document.getElementById("B").value);
+            let C = parseFloat(document.getElementById("C").value);
+            let Alpha = parseFloat(document.getElementById("Alpha").value);
+            let Beta = parseFloat(document.getElementById("Beta").value);
+            let count = [A, B, C, Alpha, Beta].filter(v => !isNaN(v)).length;
+            
+            if (count !== 2) {
+                document.getElementById("result").innerText = "Please enter exactly two values.";
                 return;
             }
             
-            let values = selected.map(el => el.value);
-            document.getElementById("result").innerText = `Selected: ${values.join(' and ')}`;
+            if (!isNaN(A) && !isNaN(B)) C = Math.sqrt(A * A + B * B);
+            else if (!isNaN(A) && !isNaN(C)) B = Math.sqrt(C * C - A * A);
+            else if (!isNaN(B) && !isNaN(C)) A = Math.sqrt(C * C - B * B);
+            else if (!isNaN(A) && !isNaN(Alpha)) {
+                Beta = 90 - Alpha;
+                B = A * Math.tan(Alpha * Math.PI / 180);
+                C = Math.sqrt(A * A + B * B);
+            }
+            else if (!isNaN(A) && !isNaN(Beta)) {
+                Alpha = 90 - Beta;
+                B = A * Math.tan(Alpha * Math.PI / 180);
+                C = Math.sqrt(A * A + B * B);
+            }
+            else if (!isNaN(B) && !isNaN(Alpha)) {
+                Beta = 90 - Alpha;
+                A = B / Math.tan(Alpha * Math.PI / 180);
+                C = Math.sqrt(A * A + B * B);
+            }
+            else if (!isNaN(B) && !isNaN(Beta)) {
+                Alpha = 90 - Beta;
+                A = B / Math.tan(Alpha * Math.PI / 180);
+                C = Math.sqrt(A * A + B * B);
+            }
+            else if (!isNaN(C) && !isNaN(Alpha)) {
+                Beta = 90 - Alpha;
+                A = C * Math.cos(Alpha * Math.PI / 180);
+                B = C * Math.sin(Alpha * Math.PI / 180);
+            }
+            else if (!isNaN(C) && !isNaN(Beta)) {
+                Alpha = 90 - Beta;
+                A = C * Math.cos(Alpha * Math.PI / 180);
+                B = C * Math.sin(Alpha * Math.PI / 180);
+            }
+            else if (!isNaN(Alpha) && !isNaN(Beta)) {
+                if (Alpha + Beta !== 90) {
+                    document.getElementById("result").innerText = "Angles must sum to 90 degrees.";
+                    return;
+                }
+            }
             
-            // Placeholder for actual computation logic
+            let resultText = `A: ${toMixedFraction(A)}, B: ${toMixedFraction(B)}, C: ${toMixedFraction(C)}, Alpha: ${Alpha.toFixed(2)}°, Beta: ${Beta.toFixed(2)}°`;
+            document.getElementById("result").innerText = resultText;
         }
     </script>
 </body>
