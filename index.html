@@ -87,6 +87,7 @@
         }
 
         function toMixedFraction(decimal) {
+            if (Number.isInteger(decimal)) return `${decimal}`;
             let whole = Math.floor(decimal);
             let frac = decimal - whole;
             let denominator = 16;
