@@ -72,8 +72,8 @@
             <label>$$A$$ <input type="number" id="A" step="any"></label>
             <label>$$B$$ <input type="number" id="B" step="any"></label>
             <label>$$C$$ <input type="number" id="C" step="any"></label>
-            <label>$$\\alpha$$ <input type="number" id="Alpha" step="any"></label>
-            <label>$$\\beta$$ <input type="number" id="Beta" step="any"></label>
+            <label>$$\alpha$$ <input type="number" id="Alpha" step="any"></label>
+            <label>$$\beta$$ <input type="number" id="Beta" step="any"></label>
         </div>
         <button onclick="calculate()">Calculate</button>
         <button onclick="clearFields()">Clear</button>
@@ -98,7 +98,7 @@
             let commonDivisor = gcd(numerator, denominator);
             numerator /= commonDivisor;
             denominator /= commonDivisor;
-            return numerator === 0 ? `$$ ${whole} $$` : `$$ ${whole} \\frac{${numerator}}{${denominator}} $$`;
+            return numerator === 0 ? `$$ ${whole} $$` : `$$ ${whole} \frac{${numerator}}{${denominator}} $$`;
         }
 
         function calculate() {
