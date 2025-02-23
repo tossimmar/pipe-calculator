@@ -5,77 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: white;
-    color: black;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    max-width: 600px;
-    margin: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.inputs {
-    display: inline-block;
-    text-align: left;
-}
-
-.inputs label {
-    display: inline-block;
-    margin-right: 10px;
-    width: 60px;  /* Adjust the width as needed */
-}
-
-.inputs input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #f9f9f9;
-    width: 100px; /* Adjust the width as needed */
-    text-align: center;
-    margin-right: 10px; /* Space between input fields */
-    margin-left: 10px;
-}
-
-button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #f9f9f9;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.result {
-    margin-top: 20px;
-    font-weight: bold;
-    background: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 100%;
-    overflow-x: auto;
-}
-
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            color: black;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
         img {
             width: 80%;
             height: auto;
             border-radius: 4px;
+        }
+        .inputs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .inputs label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f9f9f9;
+            color: black;
+            width: 80px;
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+       
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            word-wrap: break-word; /* Allows wrapping */
+            white-space: pre-wrap;  /* Prevents LaTeX from overflowing */
+            max-width: 100%; /* Makes sure the result fits */
+            overflow-x: auto; /* Allows horizontal scrolling if needed */
         }
     </style>
 </head>
@@ -84,15 +73,12 @@ button {
         <img src="./right-triangle-2.png" alt="Right Triangle">
         <p>Enter two values:</p>
         <div class="inputs">
-            <label><span class="label-text">$$A$$</span> <input type="number" id="A" step="any"></label>
-            <label><span class="label-text">$$B$$</span> <input type="number" id="B" step="any"></label>
-            <label><span class="label-text">$$C$$</span> <input type="number" id="C" step="any"></label>
-            <label><span class="label-text">$$\alpha$$</span> <input type="number" id="Alpha" step="any"></label>
-            <label><span class="label-text">$$\beta$$</span> <input type="number" id="Beta" step="any"></label>
+            <label>$$A$$ <input type="number" id="A" step="any"></label>
+            <label>$$B$$ <input type="number" id="B" step="any"></label>
+            <label>$$C$$ <input type="number" id="C" step="any"></label>
+            <label>$$\alpha$$ <input type="number" id="Alpha" step="any"></label>
+            <label>$$\beta$$ <input type="number" id="Beta" step="any"></label>
         </div>
-
-
-
         <button onclick="calculate()">Calculate</button>
         <button onclick="clearFields()">Clear</button>
         <div class="result" id="result"></div>
