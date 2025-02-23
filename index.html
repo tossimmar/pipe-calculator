@@ -171,7 +171,13 @@
             let commonDivisor = gcd(numerator, denominator);
             numerator /= commonDivisor;
             denominator /= commonDivisor;
-            return (numerator === 0 || numerator / denominator === 1) ? `${whole}` : `${whole} \\frac{${numerator}}{${denominator}}`;
+            if (numerator === 0) {
+                return `${whole}`;
+            }
+            if (numerator / denominator === 1) {
+                return `${whole + 1}`;
+            }
+            return `${whole} \\frac{${numerator}}{${denominator}}`;
         }
 
         function calculate() {
