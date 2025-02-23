@@ -168,6 +168,7 @@
             
             let resultText = `A = ${toMixedFraction(A)}, B = ${toMixedFraction(B)}, C = ${toMixedFraction(C)}, α = ${Alpha.toFixed(2)}°, β = ${Beta.toFixed(2)}°`;
             document.getElementById("result").innerText = resultText;
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
 
         function clearFields() {
