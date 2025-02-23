@@ -25,16 +25,33 @@
         }
         .inputs {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .labels, .fields {
+            display: flex;
             justify-content: center;
             gap: 10px;
         }
-        .inputs label {
-            display: flex;
-            flex-direction: column;
-            align-items: baseline;
-            min-height: 30px; /* Adjust as needed to ensure uniform height */
+        
+        .labels span {
+            display: inline-block;
+            text-align: center;
+            width: 80px; /* Match input width */
         }
+        
+        .fields input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f9f9f9;
+            color: black;
+            width: 80px;
+            text-align: center;
+        }
+
         input {
             padding: 5px;
             border: 1px solid #ccc;
@@ -74,12 +91,22 @@
         <img src="./right-triangle-2.png" alt="Right Triangle">
         <p>Enter two values:</p>
         <div class="inputs">
-            <label>$$A$$ <input type="number" id="A" step="any"></label>
-            <label>$$B$$ <input type="number" id="B" step="any"></label>
-            <label>$$C$$ <input type="number" id="C" step="any"></label>
-            <label>$$\alpha$$ <input type="number" id="Alpha" step="any"></label>
-            <label>$$\beta$$ <input type="number" id="Beta" step="any"></label>
+            <div class="labels">
+                <span>$$A$$</span>
+                <span>$$B$$</span>
+                <span>$$C$$</span>
+                <span>$$\alpha$$</span>
+                <span>$$\beta$$</span>
+            </div>
+            <div class="fields">
+                <input type="number" id="A" step="any">
+                <input type="number" id="B" step="any">
+                <input type="number" id="C" step="any">
+                <input type="number" id="Alpha" step="any">
+                <input type="number" id="Beta" step="any">
+            </div>
         </div>
+
         <button onclick="calculate()">Calculate</button>
         <button onclick="clearFields()">Clear</button>
         <div class="result" id="result"></div>
