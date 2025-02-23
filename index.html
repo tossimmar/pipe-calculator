@@ -94,7 +94,7 @@
             let commonDivisor = gcd(numerator, denominator);
             numerator /= commonDivisor;
             denominator /= commonDivisor;
-            return numerator === 0 ? `${whole}` : `${whole} ${numerator}/${denominator}`;
+            return numerator === 0 ? `${whole}` : `${whole} ${numerator}&frasl;${denominator}`;
         }
 
         function calculate() {
