@@ -5,79 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: white;
-            color: black;
-        }
-        .container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.inputs {
+    text-align: center;
+}
+
+.inputs label {
+    margin-right: 10px; /* Space between label and input */
+}
+
+.inputs input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f9f9f9;
+    width: 80px;
+    text-align: baseline;
+    margin: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
         img {
             width: 80%;
             height: auto;
             border-radius: 4px;
-        }
-        .inputs {
-            display: flex;
-            flex-direction: row;
-            gap: 10px; /* Space between rows */
-            align-items: baseline;
-        }
-
-.inputs label {
-    display: flex;
-    align-items: baseline;  /* Align all labels with the same baseline */
-}
-
-.inputs .label-text {
-    display: inline-block;
-    width: 50px; /* Fixed width for label text */
-    text-align: right;
-    margin-right: 10px;
-    font-size: 1.2em; /* Ensure the size is consistent */
-    line-height: 1;  /* Prevent any extra vertical spacing */
-    vertical-align: baseline;  /* Align symbols' baseline */
-}
-
-        
-        input {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: #f9f9f9;
-            color: black;
-            width: 80px;
-            text-align: baseline;
-        }
-        
-        button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #f9f9f9;
-            color: black;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-       
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-            background: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            word-wrap: break-word; /* Allows wrapping */
-            white-space: pre-wrap;  /* Prevents LaTeX from overflowing */
-            max-width: 100%; /* Makes sure the result fits */
-            overflow-x: auto; /* Allows horizontal scrolling if needed */
         }
     </style>
 </head>
