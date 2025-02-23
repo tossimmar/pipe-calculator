@@ -39,7 +39,11 @@
             width: 50px; /* Adjust width to align all labels */
             text-align: right;
             margin-right: 10px; /* Space between label and input */
+            font-size: 1.2em; /* Ensure the size is consistent */
+            line-height: 1;  /* Prevent any extra vertical spacing */
+            vertical-align: baseline;  /* Align symbols' baseline */
         }
+        
         input {
             padding: 5px;
             border: 1px solid #ccc;
@@ -48,10 +52,6 @@
             color: black;
             width: 80px;
             text-align: center;
-        }
-
-        .mathjax-symbol {
-            font-size: 1.2em; /* Scale symbols to match other text */
         }
         
         button {
@@ -87,9 +87,10 @@
             <label><span class="label-text">$$A$$</span> <input type="number" id="A" step="any"></label>
             <label><span class="label-text">$$B$$</span> <input type="number" id="B" step="any"></label>
             <label><span class="label-text">$$C$$</span> <input type="number" id="C" step="any"></label>
-            <label><span class="label-text"><span class="mathjax-symbol">$$\alpha$$</span></span> <input type="number" id="Alpha" step="any"></label>
-            <label><span class="label-text"><span class="mathjax-symbol">$$\beta$$</span></span> <input type="number" id="Beta" step="any"></label>
+            <label><span class="label-text">$$\alpha$$</span> <input type="number" id="Alpha" step="any"></label>
+            <label><span class="label-text">$$\beta$$</span> <input type="number" id="Beta" step="any"></label>
         </div>
+
 
 
         <button onclick="calculate()">Calculate</button>
