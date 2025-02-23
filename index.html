@@ -84,12 +84,35 @@
             max-width: 100%; /* Makes sure the result fits */
             overflow-x: auto; /* Allows horizontal scrolling if needed */
         }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333; /* Dark gray for a modern look */
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666; /* Lighter gray for contrast */
+        }
+
     </style>
 </head>
 <body>
+
+    <div class="header">
+        <h1>Right Triangle Calculator</h1>
+        <p>Enter two values and click Calculate!</p>
+    </div>
+
     <div class="container">
         <img src="./right-triangle.PNG" alt="Right Triangle">
-        <p>Enter two values:</p>
         <div class="inputs">
             <div class="labels">
                 <span>$$A$$</span>
