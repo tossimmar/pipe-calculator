@@ -140,6 +140,21 @@
     </script>
 
     <script>
+
+        function parseFraction(input) {
+            let match = input.trim().match(/^\s*(-?\d+)\s*(?:\s+(\d+)\s*\/\s*(\d+))?\s*$/);
+            if (!match) return NaN;
+            let whole = parseInt(match[1], 10);
+            let numerator = match[2] ? parseInt(match[2], 10) : 0;
+            let denominator = match[3] ? parseInt(match[3], 10) : 1;
+            return whole + (numerator / denominator);
+        }
+
+        function getInputValue(id) {
+            let value = document.getElementById(id).value;
+            return value.includes('/') ? parseFraction(value) : parseFloat(value);
+        }
+        
         function gcd(a, b) {
             return b ? gcd(b, a % b) : a;
         }
@@ -157,9 +172,12 @@
         }
 
         function calculate() {
-            let A = parseFloat(document.getElementById("A").value);
-            let B = parseFloat(document.getElementById("B").value);
-            let C = parseFloat(document.getElementById("C").value);
+            // let A = parseFloat(document.getElementById("A").value);
+            // let B = parseFloat(document.getElementById("B").value);
+            // let C = parseFloat(document.getElementById("C").value);
+            let A = getInputValue("A");
+            let B = getInputValue("B");
+            let C = getInputValue("C");
             let Alpha = parseFloat(document.getElementById("Alpha").value);
             let Beta = parseFloat(document.getElementById("Beta").value);
             let count = [A, B, C, Alpha, Beta].filter(v => !isNaN(v)).length;
