@@ -34,6 +34,12 @@
             flex-direction: column;
             align-items: center;
         }
+        .inputs .label-text {
+            display: inline-block;
+            width: 50px; /* Adjust width to align all labels */
+            text-align: right;
+            margin-right: 10px; /* Space between label and input */
+        }
         input {
             padding: 5px;
             border: 1px solid #ccc;
@@ -73,13 +79,13 @@
         <img src="./right-triangle-2.png" alt="Right Triangle">
         <p>Enter two values:</p>
         <div class="inputs">
-            <label>$$A$$ <input type="number" id="A" step="any"></label>
-            <label>$$B$$ <input type="number" id="B" step="any"></label>
-            <label>$$C$$ <input type="number" id="C" step="any"></label>
-            <label>$$ A, \htmlStyle{font-size: 1.2em}{\alpha} $$
- <input type="number" id="Alpha" step="any"></label>
-            <label>$$\\scaleto{\beta}{A}$$ <input type="number" id="Beta" step="any"></label>
-        </div>
+    <label><span class="label-text">$$A$$</span> <input type="number" id="A" step="any"></label>
+    <label><span class="label-text">$$B$$</span> <input type="number" id="B" step="any"></label>
+    <label><span class="label-text">$$C$$</span> <input type="number" id="C" step="any"></label>
+    <label><span class="label-text">$$\alpha$$</span> <input type="number" id="Alpha" step="any"></label>
+    <label><span class="label-text">$$\beta$$</span> <input type="number" id="Beta" step="any"></label>
+</div>
+
         <button onclick="calculate()">Calculate</button>
         <button onclick="clearFields()">Clear</button>
         <div class="result" id="result"></div>
